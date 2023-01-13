@@ -1,0 +1,104 @@
+WindowManager:
+    TelaInicial:
+    TelaLogin:
+    TelaInicial2:
+    TelaUsuario:
+
+<TelaLogin@Screen>:
+    name: 'telalogin'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [125, 125, 125, 125]
+        Label:
+            text: 'Login:'
+            size_hint_x: 1
+            size_hint_y: 0.05
+        TextInput:
+            id: lbLogin
+            size_hint_x: 1
+            size_hint_y: None
+            multiline: False
+            height: 40
+        Label:
+            text: 'Senha:'
+            size_hint_x: 1
+            size_hint_y: 0.05
+        TextInput:
+            id: lbSenha
+            size_hint_x: 1
+            size_hint_y: None
+            multiline: False
+            password: True
+            height: 40
+        Button:
+            text: 'Login'
+            size_hint_x: 1
+            size_hint_y: 0.03
+            on_press: root.login_press()
+        Label:
+            text: 'Recuperar senha'
+            size_hint_y: None
+            height: 40
+        Label:
+            id: lbResposta
+            text: '-'
+            size_hint_y: None
+            height: 40
+
+<TelaUsuario@Screen>:
+    BoxLayout:
+        BoxLayout:
+            Label:
+                text: 'nome'
+            Label:
+                text: 'e-mail'
+            Label:
+                text: 'senha'
+            Label:
+                text: 'CEP'
+        BoxLayout:
+            Label:
+                text: 'nome'
+            Label:
+                text: 'e-mail'
+            Label:
+                text: 'senha'
+            Label:
+                text: 'CEP'
+
+<TelaInicial2@Screen>:
+    name: 'telainicial2'
+    BoxLayout:
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.30
+            Label:
+                id:home_logo
+                text:'Home'
+                size_hint_y: 0.95
+            Button:
+                text: 'Usuário'
+            Button:
+                text: 'Carrinho compra'
+            Button:
+                text: 'Supermecado'
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'Content'
+
+<TelaInicial@Screen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [125, 100, 125, 100]
+        Label:
+            text: 'Carrinho de Compra:'
+            size_hint_x: 1
+            size_hint_y: 0.05
+        Image:
+            source: 'carrinho.jpg'
+        Button:
+            text: 'Começar'
+            on_press: app.root.current = 'telalogin'
+            size_hint_y: 0.05
+            background_color: 'black'
