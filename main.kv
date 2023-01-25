@@ -1,104 +1,93 @@
-WindowManager:
+MDScreenManager:
     TelaInicial:
     TelaLogin:
-    TelaInicial2:
+    TelaProduto:
     TelaUsuario:
+    TelaCarrinho:
+    TelaSupermecado:
+    TelaComparativo:
 
-<TelaLogin@Screen>:
+<TelaInicial@MDScreen>:
+    MDLabel:
+        text: 'Carrinho de Compra:'
+        size_hint_x: 1
+        size_hint_y: 0.05
+        font_size: 40
+        halign: 'center'
+        pos_hint: {"center_x":0.5, "center_y":0.7}
+    Image:
+        source: 'carrinho.jpg'
+        size_hint: 0.2, 0.2
+        pos_hint: {"center_x":0.5, "center_y":0.4}
+    MDRectangleFlatButton:
+        text: 'Começar'
+        on_press: app.root.current = 'telalogin'
+        size_hint_y: 0.05
+        background_color: 'black'
+        pos_hint: {"center_x":0.5, "center_y":0.2}
+
+<TelaLogin@MDScreen>:
     name: 'telalogin'
-    BoxLayout:
-        orientation: 'vertical'
-        padding: [125, 125, 125, 125]
-        Label:
-            text: 'Login:'
-            size_hint_x: 1
-            size_hint_y: 0.05
-        TextInput:
-            id: lbLogin
-            size_hint_x: 1
-            size_hint_y: None
-            multiline: False
-            height: 40
-        Label:
-            text: 'Senha:'
-            size_hint_x: 1
-            size_hint_y: 0.05
-        TextInput:
-            id: lbSenha
-            size_hint_x: 1
-            size_hint_y: None
-            multiline: False
-            password: True
-            height: 40
-        Button:
-            text: 'Login'
-            size_hint_x: 1
-            size_hint_y: 0.03
-            on_press: root.login_press()
-        Label:
-            text: 'Recuperar senha'
-            size_hint_y: None
-            height: 40
-        Label:
-            id: lbResposta
-            text: '-'
-            size_hint_y: None
-            height: 40
+    Image:
+        source: "login.jpg"
+        pos_hint: {"center_x":0.5, "center_y":0.8}
+    MDTextField:
+        id: lbLogin
+        size_hint_x: 0.7
+        size_hint_y: None
+        height: 40
+        hint_text: "Login"
+        pos_hint: {"center_x":0.5, "center_y":0.55}
+    MDTextField:
+        id: lbSenha
+        size_hint_x: 0.7
+        size_hint_y: None
+        height: 40
+        hint_text: "Senha"
+        password: True
+        pos_hint: {"center_x":0.5, "center_y":0.45}
+    MDRectangleFlatButton:
+        text: 'Login'
+        size_hint: None, None
+        width: 80
+        height: 40
+        on_press: root.login_press()
+        pos_hint: {"center_x":0.4, "center_y":0.35}
+    MDRectangleFlatButton:
+        text: 'Recuperar senha'
+        size_hint: None, None
+        width: 80
+        height: 40
+        pos_hint: {"center_x":0.6, "center_y":0.35}
+    MDLabel:
+        id: lbResposta
+        text: '-'
+        size_hint_y: None
+        height: 40
+        pos_hint: {"center_x":0.5, "center_y":0.25}
 
-<TelaUsuario@Screen>:
-    BoxLayout:
-        BoxLayout:
-            Label:
-                text: 'nome'
-            Label:
-                text: 'e-mail'
-            Label:
-                text: 'senha'
-            Label:
-                text: 'CEP'
-        BoxLayout:
-            Label:
-                text: 'nome'
-            Label:
-                text: 'e-mail'
-            Label:
-                text: 'senha'
-            Label:
-                text: 'CEP'
+<TelaProduto@MDScreen>:
+    name: 'telaproduto'
+    MDTopAppBar:
+        title: 'Busca de produtos'
+        icon: "text-search"
+        elevation: 1
+        right_action_items:
+            [
+            ["account-box", lambda x: app.callback('telausuario'), 'Usuario'],
+            ["cart-minus", lambda x: app.callback('telacarrinho'), 'Carrinho'],
+            ["store-outline", lambda x: app.callback('telasupermecado'), 'Supermecado'],
+            ["compare", lambda x: app.callback('telacomparativo'), 'Comparativo']
+            ]
 
-<TelaInicial2@Screen>:
-    name: 'telainicial2'
-    BoxLayout:
-        BoxLayout:
-            orientation: 'vertical'
-            size_hint_x: 0.30
-            Label:
-                id:home_logo
-                text:'Home'
-                size_hint_y: 0.95
-            Button:
-                text: 'Usuário'
-            Button:
-                text: 'Carrinho compra'
-            Button:
-                text: 'Supermecado'
-        BoxLayout:
-            orientation: 'vertical'
-            Label:
-                text: 'Content'
+<TelaUsuario@MDScreen>:
+    name: 'telausuario'
 
-<TelaInicial@Screen>:
-    BoxLayout:
-        orientation: 'vertical'
-        padding: [125, 100, 125, 100]
-        Label:
-            text: 'Carrinho de Compra:'
-            size_hint_x: 1
-            size_hint_y: 0.05
-        Image:
-            source: 'carrinho.jpg'
-        Button:
-            text: 'Começar'
-            on_press: app.root.current = 'telalogin'
-            size_hint_y: 0.05
-            background_color: 'black'
+<TelaCarrinho@MDScreen>:
+    name: 'telacarrinho'
+
+<TelaSupermecado@MDScreen>:
+    name: 'telasupermecado'
+
+<TelaComparativo@MDScreen>:
+    name: 'telacomparativo'
