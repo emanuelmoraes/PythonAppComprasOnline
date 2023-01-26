@@ -82,12 +82,64 @@ MDScreenManager:
 
 <TelaUsuario@MDScreen>:
     name: 'telausuario'
+    MDTopAppBar:
+        title: 'Usuario'
+        elevation: 1
+        right_action_items:
+            [
+            ["account-box", lambda x: app.callback('telaproduto'), 'Produto'],
+            ["cart-minus", lambda x: app.callback('telacarrinho'), 'Carrinho'],
+            ["store-outline", lambda x: app.callback('telasupermecado'), 'Supermecado'],
+            ["compare", lambda x: app.callback('telacomparativo'), 'Comparativo']
+            ]
+    MDTextField:
+        id: lbId
+        hint_text: "ID"
+        pos_hint: {"center_x":0.5, "center_y":0.8}
+    MDTextField:
+        id: lbNome
+        hint_text: "Nome"
+        pos_hint: {"center_x":0.5, "center_y":0.7}
+    MDTextField:
+        id: lbEmail
+        hint_text: "Email"
+        pos_hint: {"center_x":0.5, "center_y":0.6}
+    MDTextField:
+        id: lbSenha
+        hint_text: "Senha"
+        pos_hint: {"center_x":0.5, "center_y":0.5}
+    MDTextField:
+        id: lbCep
+        hint_text: "CEP"
+        pos_hint: {"center_x":0.5, "center_y":0.4}
 
 <TelaCarrinho@MDScreen>:
     name: 'telacarrinho'
 
 <TelaSupermecado@MDScreen>:
     name: 'telasupermecado'
+    MDTopAppBar:
+        title: 'Supermecado'
+        elevation: 1
+        right_action_items:
+            [
+            ["account-box", lambda x: app.callback('telaproduto'), 'Produto'],
+            ["cart-minus", lambda x: app.callback('telacarrinho'), 'Carrinho'],
+            ["store-outline", lambda x: app.callback('telasupermecado'), 'Supermecado'],
+            ["compare", lambda x: app.callback('telacomparativo'), 'Comparativo']
+            ]
+    MDTextField:
+        id: lbId
+        hint_text: "ID"
+        pos_hint: {"center_x":0.5, "center_y":0.8}
+    MDTextField:
+        id: lbNome
+        hint_text: "Nome"
+        pos_hint: {"center_x":0.5, "center_y":0.7}
+    MDTextField:
+        id: lbSite
+        hint_text: "Site"
+        pos_hint: {"center_x":0.5, "center_y":0.6}
 
 <TelaComparativo@MDScreen>:
     name: 'telacomparativo'
