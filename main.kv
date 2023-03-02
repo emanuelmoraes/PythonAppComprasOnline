@@ -59,87 +59,163 @@ MDScreenManager:
         width: 80
         height: 40
         pos_hint: {"center_x":0.6, "center_y":0.35}
-    MDLabel:
-        id: lbResposta
-        text: '-'
-        size_hint_y: None
-        height: 40
-        pos_hint: {"center_x":0.5, "center_y":0.25}
 
 <TelaProduto@MDScreen>:
     name: 'telaproduto'
-    MDTopAppBar:
-        title: 'Busca de produtos'
-        icon: "text-search"
-        elevation: 1
-        right_action_items:
-            [
-            ["account-box", lambda x: app.callback('telausuario'), 'Usuario'],
-            ["cart-minus", lambda x: app.callback('telacarrinho'), 'Carrinho'],
-            ["store-outline", lambda x: app.callback('telasupermecado'), 'Supermecado'],
-            ["compare", lambda x: app.callback('telacomparativo'), 'Comparativo']
-            ]
+	MDBoxLayout:
+		orientation: "vertical"
+		MDTopAppBar:
+			title: 'Busca de produtos'
+			icon: "text-search"
+			elevation: 1
+			right_action_items:
+				[
+				["account-box", lambda x: app.callback('telausuario'), 'Usuario'],
+				["cart-minus", lambda x: app.callback('telacarrinho'), 'Carrinho'],
+				["store-outline", lambda x: app.callback('telasupermecado'), 'Supermecado'],
+				["compare", lambda x: app.callback('telacomparativo'), 'Comparativo'],
+				["plus", lambda x: root.adicionar_produto(), 'Criar']
+				]
+		ScrollView:
+			MDList:
+				id: lista
 
 <TelaUsuario@MDScreen>:
     name: 'telausuario'
-    MDTopAppBar:
-        title: 'Usuario'
-        elevation: 1
-        right_action_items:
-            [
-            ["account-box", lambda x: app.callback('telaproduto'), 'Produto'],
-            ["cart-minus", lambda x: app.callback('telacarrinho'), 'Carrinho'],
-            ["store-outline", lambda x: app.callback('telasupermecado'), 'Supermecado'],
-            ["compare", lambda x: app.callback('telacomparativo'), 'Comparativo']
-            ]
-    MDTextField:
-        id: lbId
-        hint_text: "ID"
-        pos_hint: {"center_x":0.5, "center_y":0.8}
-    MDTextField:
-        id: lbNome
-        hint_text: "Nome"
-        pos_hint: {"center_x":0.5, "center_y":0.7}
-    MDTextField:
-        id: lbEmail
-        hint_text: "Email"
-        pos_hint: {"center_x":0.5, "center_y":0.6}
-    MDTextField:
-        id: lbSenha
-        hint_text: "Senha"
-        pos_hint: {"center_x":0.5, "center_y":0.5}
-    MDTextField:
-        id: lbCep
-        hint_text: "CEP"
-        pos_hint: {"center_x":0.5, "center_y":0.4}
+	MDBoxLayout:
+		orientation: "vertical"
+		MDTopAppBar:
+			title: 'Usuario'
+			elevation: 1
+			right_action_items:
+				[
+				["food", lambda x: app.callback('telaproduto'), 'Produto'],
+				["cart-minus", lambda x: app.callback('telacarrinho'), 'Carrinho'],
+				["store-outline", lambda x: app.callback('telasupermecado'), 'Supermecado'],
+				["compare", lambda x: app.callback('telacomparativo'), 'Comparativo']
+				]
+		MDTextField:
+			id: lbId
+			hint_text: "ID"
+			pos_hint: {"center_x":0.5, "center_y":0.8}
+			size_hint_x: 0.75
+		MDTextField:
+			id: lbNome
+			hint_text: "Nome"
+			pos_hint: {"center_x":0.5, "center_y":0.7}
+			size_hint_x: 0.75
+		MDTextField:
+			id: lbEmail
+			hint_text: "Email"
+			pos_hint: {"center_x":0.5, "center_y":0.6}
+			size_hint_x: 0.75
+		MDTextField:
+			id: lbSenha
+			hint_text: "Senha"
+			pos_hint: {"center_x":0.5, "center_y":0.5}
+			password: True
+			size_hint_x: 0.75
+		MDTextField:
+			id: lbCep
+			hint_text: "CEP"
+			pos_hint: {"center_x":0.5, "center_y":0.4}
+			size_hint_x: 0.75
 
 <TelaCarrinho@MDScreen>:
     name: 'telacarrinho'
+	MDBoxLayout:
+		orientation: "vertical"
+		MDTopAppBar:
+			id: topBar
+			title: 'Carrinho de compras'
+			icon: "text-search"
+			elevation: 1
+			right_action_items:
+				[
+				["account-box", lambda x: app.callback('telausuario'), 'Usuario'],
+				["food", lambda x: app.callback('telaproduto'), 'Produtos'],
+				["store-outline", lambda x: app.callback('telasupermecado'), 'Supermecado'],
+				["compare", lambda x: app.callback('telacomparativo'), 'Comparativo'],
+				["plus", lambda x: root.adicionar_carrinho(), 'Criar']
+				]
+		ScrollView:
+			MDList:
+				id: lista
 
 <TelaSupermecado@MDScreen>:
     name: 'telasupermecado'
-    MDTopAppBar:
-        title: 'Supermecado'
-        elevation: 1
-        right_action_items:
-            [
-            ["account-box", lambda x: app.callback('telaproduto'), 'Produto'],
-            ["cart-minus", lambda x: app.callback('telacarrinho'), 'Carrinho'],
-            ["store-outline", lambda x: app.callback('telasupermecado'), 'Supermecado'],
-            ["compare", lambda x: app.callback('telacomparativo'), 'Comparativo']
-            ]
-    MDTextField:
-        id: lbId
-        hint_text: "ID"
-        pos_hint: {"center_x":0.5, "center_y":0.8}
-    MDTextField:
-        id: lbNome
-        hint_text: "Nome"
-        pos_hint: {"center_x":0.5, "center_y":0.7}
-    MDTextField:
-        id: lbSite
-        hint_text: "Site"
-        pos_hint: {"center_x":0.5, "center_y":0.6}
+	MDBoxLayout:
+		orientation: "vertical"
+		MDTopAppBar:
+			title: 'Supermecado'
+			elevation: 1
+			right_action_items:
+				[
+				["account-box", lambda x: app.callback('telausuario'), 'Usuario'],
+				["food", lambda x: app.callback('telaproduto'), 'Produtos'],
+				["cart-minus", lambda x: app.callback('telacarrinho'), 'Carrinho'],
+				["compare", lambda x: app.callback('telacomparativo'), 'Comparativo'],
+				["plus", lambda x: root.adicionar_supermecado(), 'Criar']
+				]
+		ScrollView:
+			MDList:
+				id: lista
 
 <TelaComparativo@MDScreen>:
     name: 'telacomparativo'
+
+<CustomProdutoListItem@OneLineAvatarIconListItem>:
+	text: "produto"
+	on_size:
+        self.ids._right_container.width = container.width
+        self.ids._right_container.x = container.width
+
+    IconLeftWidget:
+        icon: "cart-minus"
+
+    YourContainer:
+        id: container
+
+        MDIconButton:
+            icon: "minus"
+
+        MDIconButton:
+            icon: "plus"
+
+<CustomCarrinhoListItem@OneLineAvatarIconListItem>:
+    text: "One-line item with avatar"
+	internal_key: ""
+    on_size:
+        self.ids._right_container.width = container.width
+        self.ids._right_container.x = container.width
+
+    IconLeftWidget:
+        icon: "cart-minus"
+
+    YourContainer:
+        id: container
+
+        MDIconButton:
+            icon: "minus"
+			on_press: app.remove_carrinho_button(root.text)
+
+<Content>:
+	MDTextField:
+        id : textField
+        pos_hint : {'center_x':.5,'center_y':.5}
+
+<ContentSupermecado>:
+	orientation: "vertical"
+	spacing: "12dp"
+	size_hint_y: None
+	height: "120dp"
+
+	MDTextField:
+		id : nomeField
+		pos_hint : {'center_x':.5,'center_y':.5}
+		hint_text: "Nome"
+
+	MDTextField:
+		id : siteField
+		pos_hint : {'center_x':.5,'center_y':.5}
+		hint_text: "Site"
