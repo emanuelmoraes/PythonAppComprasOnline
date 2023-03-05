@@ -1,7 +1,7 @@
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.button import MDIconButton, MDFlatButton, MDRaisedButton
 from kivymd.uix.dialog import MDDialog
-from firebase_admin import db
+import pyrebase
 from carrinho_custom_list_item import CustomCarrinhoListItem
 from usuario import Usuario
 from kivymd.uix.floatlayout import MDFloatLayout
@@ -18,18 +18,20 @@ class TelaCarrinho(MDScreen):
 
     def atualiza_lista_carrinho(self):
         self.remove_tudo_lista()
-        resultado = self.root_db.child('Carrinho').order_by_key().get()
-        print(resultado)
-        for key, value in resultado.items():
-            #print("carrinho = ", value['nome'])
-            if (type(value) != dict):
-                continue
-            if (value['user_id'] != self.current_user.id):
-                continue
-            item = CustomCarrinhoListItem(text=f"{value['nome']}")
-            item.internal_key = key
-            self.lista_carrinho.append(item)
-            self.ids.lista.add_widget(item)
+        resultado = self.root_db.child('Carrinho').get()
+        try:
+            for value in resultado.each():
+                carrinho = value.val()
+                if carrinho == None:
+                    continue
+                if (carrinho['user_key'] != self.current_user.key):
+                    continue
+                item = CustomCarrinhoListItem(text=f"{carrinho['nome']}")
+                item.internal_key = value.key()
+                self.lista_carrinho.append(item)
+                self.ids.lista.add_widget(item)
+        except:
+            pass
 
     def remove_tudo_lista(self):
         for item in self.lista_carrinho:
@@ -73,8 +75,8 @@ class TelaCarrinho(MDScreen):
 
     def adicionar_carrinho_bancodados(self, nome: str):
         carrinho_db = self.root_db.child('Carrinho')
-        carrinho_db.push({'nome':nome, 'user_id':self.current_user.id})
+        carrinho_db.push({'nome':nome, 'user_key':self.current_user.key})
 
     def remove_carrinho_bancodados(self, key: str):
         item_carrinho_db = self.root_db.child(f'Carrinho/{key}')
-        item_carrinho_db.delete()
+        item_carrinho_db.remove()

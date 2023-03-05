@@ -16,14 +16,12 @@ class TelaSupermecado(MDScreen):
 
     def atualiza_lista_supermecado(self):
         self.remove_tudo_lista()
-        resultado = self.root_db.child('Supermecado').order_by_key().get()
-        print(resultado)
-        if resultado != None:
-            for key, value in resultado.items():
-                if (type(value) == dict):
-                    item = OneLineListItem(text=f"{value['nome']}")
-                    self.lista_supermecado.append(item)
-                    self.ids.lista.add_widget(item)
+        resultado = self.root_db.child('Supermecado').get()
+        for value in resultado.each():
+            supermecado = value.val()
+            item = OneLineListItem(text=f"{supermecado['nome']}")
+            self.lista_supermecado.append(item)
+            self.ids.lista.add_widget(item)
 
     def remove_tudo_lista(self):
         for item in self.lista_supermecado:

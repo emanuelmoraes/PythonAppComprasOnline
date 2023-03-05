@@ -3,27 +3,32 @@ kivy.require("2.0.0")
 from kivymd.app import MDApp
 from kivymd.uix.screen import MDScreen
 from kivymd.toast import toast
-from kivymd.uix.list import OneLineListItem, MDList, OneLineAvatarIconListItem, IRightBodyTouch
+from kivymd.uix.list import OneLineListItem, MDList, OneLineAvatarListItem, IRightBodyTouch
 from kivy.clock import Clock
 from kivy.properties import StringProperty
-from kivymd.uix.boxlayout import MDBoxLayout
-import firebase_admin
-from firebase_admin import credentials
+from kivymd.uix.boxlayout import BoxLayout
+import pyrebase
 from usuario import Usuario
 from telalogin import TelaLogin
 from telacarrinho import TelaCarrinho
 from telasupermecado import TelaSupermecado
 from telaproduto import TelaProduto
+from kivymd.uix.dialog import MDDialog
 
-###########################################################################
-# CONFIGURACAO PARA O FIREBASE
-###########################################################################
-database_host = 'https://carrinhocompraonline-default-rtdb.firebaseio.com/'
-cred = credentials.Certificate('carrinhocompraonline-firebase-adminsdk-edoxn-0c76c68a16.json')
-default_app = firebase_admin.initialize_app(cred)
+firebaseConfig = {
+  'apiKey': "AIzaSyD-mY93Ujdy8a3vZGwM3gSnUqul0aXH6l8",
+  'authDomain': "carrinhocompraonline.firebaseapp.com",
+  'databaseURL': "https://carrinhocompraonline-default-rtdb.firebaseio.com",
+  'projectId': "carrinhocompraonline",
+  'storageBucket': "carrinhocompraonline.appspot.com",
+  'messagingSenderId': "511983918676",
+  'appId': "1:511983918676:web:54383ef65e033b7a56d7c1"
+}
 
-from firebase_admin import db
-root_db = db.reference(url = database_host)
+firebase = pyrebase.initialize_app(firebaseConfig)
+auth = firebase.auth()
+user = auth.sign_in_with_email_and_password("emanueljsmoraes@gmail.com", "123456")
+database = firebase.database()
 
 current_user = Usuario()
 
@@ -38,19 +43,19 @@ class MainApp(MDApp):
 
     def on_start(self):
         tela_login = self.root.get_screen("telalogin")
-        tela_login.root_db = root_db
+        tela_login.root_db = database
         tela_login.current_user = current_user
 
         tela_carrinho = self.root.get_screen("telacarrinho")
-        tela_carrinho.root_db = root_db
+        tela_carrinho.root_db = database
         tela_carrinho.current_user = current_user
 
         tela_supermecado = self.root.get_screen("telasupermecado")
-        tela_supermecado.root_db = root_db
+        tela_supermecado.root_db = database
         tela_supermecado.current_user = current_user
 
         tela_produto = self.root.get_screen("telaproduto")
-        tela_produto.root_db = root_db
+        tela_produto.root_db = database
         tela_produto.current_user = current_user
 
     def callback(self, tela):
@@ -68,9 +73,25 @@ class MainApp(MDApp):
             tela_supermecado.atualiza_lista_supermecado()
         self.root.current = str(tela)
 
-    def remove_carrinho_button(self, text):
+    def remove_carrinho_button(self, text: str):
         tela_carrinho = self.root.get_screen("telacarrinho")
         tela_carrinho.remove_item_list(text)
+
+    def adiciona_produto_no_carrinho(self, text: str):
+        print(f'Adicionar produto {text}')
+        items = []
+        carrinhos = database.child('Carrinho').get()
+        for eachItem in carrinhos.each():
+            carrinho = eachItem.val()
+            if carrinho['user_key'] == current_user.key:
+                newItem = OneLineAvatarListItem(text = carrinho['nome'])
+                items.append(newItem)
+
+        self.dialog = MDDialog(title='Escolha um carrinho:', type="simple", items = items)
+        self.dialog.open()
+
+    def remove_produto_no_carrinho(self, text: str):
+        print(f'Remover produto {text}')
 
 janela = MainApp()
 janela.title = 'Carrinho compras online'

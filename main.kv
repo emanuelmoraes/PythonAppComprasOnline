@@ -65,7 +65,7 @@ MDScreenManager:
 	MDBoxLayout:
 		orientation: "vertical"
 		MDTopAppBar:
-			title: 'Busca de produtos'
+			title: 'Produtos'
 			icon: "text-search"
 			elevation: 1
 			right_action_items:
@@ -76,6 +76,9 @@ MDScreenManager:
 				["compare", lambda x: app.callback('telacomparativo'), 'Comparativo'],
 				["plus", lambda x: root.adicionar_produto(), 'Criar']
 				]
+		MDTextField:
+			id: edBusca
+			hint_text: "Busca..."
 		ScrollView:
 			MDList:
 				id: lista
@@ -142,6 +145,9 @@ MDScreenManager:
 			MDList:
 				id: lista
 
+<TelaProdutoPorCarrinho@MDScreen>:
+	name: 'telaprodutoporcarrinho'
+
 <TelaSupermecado@MDScreen>:
     name: 'telasupermecado'
 	MDBoxLayout:
@@ -163,24 +169,41 @@ MDScreenManager:
 
 <TelaComparativo@MDScreen>:
     name: 'telacomparativo'
+	MDBoxLayout:
+		orientation: "vertical"
+		MDTopAppBar:
+			title: 'Comparativo'
+			elevation: 1
+			right_action_items:
+				[
+				["account-box", lambda x: app.callback('telausuario'), 'Usuario'],
+				["food", lambda x: app.callback('telaproduto'), 'Produtos'],
+				["cart-minus", lambda x: app.callback('telacarrinho'), 'Carrinho']
+				]
+		ScrollView:
+			MDList:
+				id: lista
 
 <CustomProdutoListItem@OneLineAvatarIconListItem>:
-	text: "produto"
+	text: "Produto"
+	internal_key: ""
 	on_size:
         self.ids._right_container.width = container.width
         self.ids._right_container.x = container.width
 
     IconLeftWidget:
-        icon: "cart-minus"
+        icon: "food"
 
     YourContainer:
         id: container
 
         MDIconButton:
             icon: "minus"
+			on_press: app.remove_produto_no_carrinho(root.internal_key)
 
         MDIconButton:
             icon: "plus"
+			on_press: app.adiciona_produto_no_carrinho(root.internal_key)
 
 <CustomCarrinhoListItem@OneLineAvatarIconListItem>:
     text: "One-line item with avatar"
