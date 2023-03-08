@@ -8,6 +8,7 @@ class TelaProduto(MDScreen):
     root_db = None
     current_user = None #Usuario
     lista_produto = []
+    filtro = ""
 
     def atualiza_lista_produto(self, *args):
         self.remove_tudo_lista()
@@ -15,7 +16,9 @@ class TelaProduto(MDScreen):
         print(resultado.val())
         for i in resultado.each():
             produto = i.val()
-            #item = OneLineListItem(text=f"{produto['nome']}")
+            if self.filtro:
+                if self.filtro not in produto['nome']:
+                    continue
             item = CustomProdutoListItem(text=f"{produto['nome']}")
             item.internal_key = i.key()
             self.lista_produto.append(item)
@@ -27,3 +30,7 @@ class TelaProduto(MDScreen):
 
     def adicionar_produto(self):
         pass
+
+    def filtra_produtos(self, text: str):
+        self.filtro = text
+        self.atualiza_lista_produto()

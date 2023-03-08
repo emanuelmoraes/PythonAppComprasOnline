@@ -76,9 +76,15 @@ MDScreenManager:
 				["compare", lambda x: app.callback('telacomparativo'), 'Comparativo'],
 				["plus", lambda x: root.adicionar_produto(), 'Criar']
 				]
-		MDTextField:
-			id: edBusca
-			hint_text: "Busca..."
+		MDBoxLayout:
+			MDTextField:
+				id: edBusca
+				icon_left: "magnify"
+				hint_text: "Busca..."
+			MDIconButton:
+				icon: "image-search"
+				text: "Buscar"
+				on_press: root.filtra_produtos(root.ids.edBusca.text)
 		ScrollView:
 			MDList:
 				id: lista
