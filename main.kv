@@ -47,11 +47,18 @@ MDScreenManager:
         password: True
         pos_hint: {"center_x":0.5, "center_y":0.45}
     MDRectangleFlatButton:
-        text: 'Login'
+        text: 'Log in'
         size_hint: None, None
         width: 80
         height: 40
         on_press: root.login_press()
+        pos_hint: {"center_x":0.2, "center_y":0.35}
+	MDRectangleFlatButton:
+        text: 'Sign up'
+        size_hint: None, None
+        width: 80
+        height: 40
+        on_press: root.sign_up()
         pos_hint: {"center_x":0.4, "center_y":0.35}
     MDRectangleFlatButton:
         text: 'Recuperar senha'
@@ -59,6 +66,7 @@ MDScreenManager:
         width: 80
         height: 40
         pos_hint: {"center_x":0.6, "center_y":0.35}
+		on_press: root.recuperar_senha()
 
 <TelaProduto@MDScreen>:
     name: 'telaproduto'
@@ -73,8 +81,7 @@ MDScreenManager:
 				["account-box", lambda x: app.callback('telausuario'), 'Usuario'],
 				["cart-minus", lambda x: app.callback('telacarrinho'), 'Carrinho'],
 				["store-outline", lambda x: app.callback('telasupermecado'), 'Supermecado'],
-				["compare", lambda x: app.callback('telacomparativo'), 'Comparativo'],
-				["plus", lambda x: root.adicionar_produto(), 'Criar']
+				["compare", lambda x: app.callback('telacomparativo'), 'Comparativo']
 				]
 		MDBoxLayout:
 			MDTextField:

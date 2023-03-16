@@ -6,7 +6,7 @@ from produto_custom_list_item import CustomProdutoListItem
 
 class TelaProduto(MDScreen):
     root_db = None
-    current_user = None #Usuario
+    current_user = None
     lista_produto = []
     filtro = ""
 

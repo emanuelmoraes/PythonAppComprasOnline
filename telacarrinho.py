@@ -13,7 +13,7 @@ class Content(MDFloatLayout):
 class TelaCarrinho(MDScreen):
     dialog = None
     root_db = None
-    current_user = None #Usuario
+    current_user = None
     lista_carrinho = []
 
     def atualiza_lista_carrinho(self):
@@ -24,7 +24,7 @@ class TelaCarrinho(MDScreen):
                 carrinho = value.val()
                 if carrinho == None:
                     continue
-                if (carrinho['user_key'] != self.current_user.key):
+                if (carrinho['user_key'] != self.current_user['idToken']):
                     continue
                 item = CustomCarrinhoListItem(text=f"{carrinho['nome']}")
                 item.internal_key = value.key()
@@ -75,7 +75,7 @@ class TelaCarrinho(MDScreen):
 
     def adicionar_carrinho_bancodados(self, nome: str):
         carrinho_db = self.root_db.child('Carrinho')
-        carrinho_db.push({'nome':nome, 'user_key':self.current_user.key})
+        carrinho_db.push({'nome':nome, 'user_key':self.current_user['idToken']})
 
     def remove_carrinho_bancodados(self, key: str):
         item_carrinho_db = self.root_db.child(f'Carrinho/{key}')

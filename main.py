@@ -1,5 +1,3 @@
-import kivy
-kivy.require("2.0.0")
 from kivymd.app import MDApp
 from kivymd.uix.screen import MDScreen
 from kivymd.toast import toast
@@ -27,10 +25,10 @@ firebaseConfig = {
 
 firebase = pyrebase.initialize_app(firebaseConfig)
 auth = firebase.auth()
-user = auth.sign_in_with_email_and_password("emanueljsmoraes@gmail.com", "123456")
+#user = auth.sign_in_with_email_and_password("emanueljsmoraes@gmail.com", "123456")
 database = firebase.database()
 
-current_user = Usuario()
+current_user = auth.sign_in_with_email_and_password("emanueljsmoraes@gmail.com", "123456")
 
 class TelaUsuario(MDScreen):
     def atualiza_dados_usuario(self):
@@ -45,6 +43,7 @@ class MainApp(MDApp):
         tela_login = self.root.get_screen("telalogin")
         tela_login.root_db = database
         tela_login.current_user = current_user
+        tela_login.auth = firebase.auth()
 
         tela_carrinho = self.root.get_screen("telacarrinho")
         tela_carrinho.root_db = database
@@ -83,7 +82,7 @@ class MainApp(MDApp):
         carrinhos = database.child('Carrinho').get()
         for eachItem in carrinhos.each():
             carrinho = eachItem.val()
-            if carrinho['user_key'] == current_user.key:
+            if carrinho['user_key'] == current_user['idToken']:
                 newItem = OneLineAvatarListItem(text = carrinho['nome'])
                 items.append(newItem)
 
