@@ -20,17 +20,24 @@ MDScreenManager:
         size_hint: 0.2, 0.2
         pos_hint: {"center_x":0.5, "center_y":0.4}
     MDRectangleFlatButton:
-        text: 'Começar'
+        text: 'Login'
         on_press: app.root.current = 'telalogin'
         size_hint_y: 0.05
         background_color: 'black'
-        pos_hint: {"center_x":0.5, "center_y":0.2}
+        pos_hint: {"center_x":0.5, "center_y":0.25}
+	MDRectangleFlatButton:
+        text: 'Sign up'
+        on_press: app.root.current = 'telausuario'
+        size_hint_y: 0.05
+        background_color: 'black'
+        pos_hint: {"center_x":0.5, "center_y":0.15}
 
 <TelaLogin@MDScreen>:
     name: 'telalogin'
     Image:
         source: "login.jpg"
         pos_hint: {"center_x":0.5, "center_y":0.8}
+		size_hint: {0.6, 0.3}
     MDTextField:
         id: lbLogin
         size_hint_x: 0.7
@@ -49,21 +56,14 @@ MDScreenManager:
     MDRectangleFlatButton:
         text: 'Log in'
         size_hint: None, None
-        width: 80
+        width: 150
         height: 40
         on_press: root.login_press()
         pos_hint: {"center_x":0.2, "center_y":0.35}
-	MDRectangleFlatButton:
-        text: 'Sign up'
-        size_hint: None, None
-        width: 80
-        height: 40
-        on_press: root.sign_up()
-        pos_hint: {"center_x":0.4, "center_y":0.35}
     MDRectangleFlatButton:
         text: 'Recuperar senha'
         size_hint: None, None
-        width: 80
+        width: 150
         height: 40
         pos_hint: {"center_x":0.6, "center_y":0.35}
 		on_press: root.recuperar_senha()
@@ -87,7 +87,10 @@ MDScreenManager:
 			MDTextField:
 				id: edBusca
 				icon_left: "magnify"
+				icon_right: 'image-search'
 				hint_text: "Busca..."
+				on_icon_right:
+					root.filtra_produtos(root.ids.edBusca.text)
 			MDIconButton:
 				icon: "image-search"
 				text: "Buscar"
@@ -100,21 +103,17 @@ MDScreenManager:
     name: 'telausuario'
 	MDBoxLayout:
 		orientation: "vertical"
+		pos_hint: {"top": 1}
+		adaptive_height: True
 		MDTopAppBar:
 			title: 'Usuario'
 			elevation: 1
-			right_action_items:
-				[
-				["food", lambda x: app.callback('telaproduto'), 'Produto'],
-				["cart-minus", lambda x: app.callback('telacarrinho'), 'Carrinho'],
-				["store-outline", lambda x: app.callback('telasupermecado'), 'Supermecado'],
-				["compare", lambda x: app.callback('telacomparativo'), 'Comparativo']
-				]
 		MDTextField:
 			id: lbId
 			hint_text: "ID"
 			pos_hint: {"center_x":0.5, "center_y":0.8}
 			size_hint_x: 0.75
+			disabled: True
 		MDTextField:
 			id: lbNome
 			hint_text: "Nome"
@@ -136,6 +135,13 @@ MDScreenManager:
 			hint_text: "CEP"
 			pos_hint: {"center_x":0.5, "center_y":0.4}
 			size_hint_x: 0.75
+		MDRectangleFlatButton:
+			text: 'Salvar'
+			size_hint: None, None
+			width: 80
+			height: 40
+			pos_hint: {"center_x":0.5, "center_y":0.35}
+			on_press: root.salvar()
 
 <TelaCarrinho@MDScreen>:
     name: 'telacarrinho'

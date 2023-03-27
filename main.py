@@ -12,6 +12,7 @@ from telacarrinho import TelaCarrinho
 from telasupermecado import TelaSupermecado
 from telaproduto import TelaProduto
 from kivymd.uix.dialog import MDDialog
+from telausuario import TelaUsuario
 
 firebaseConfig = {
   'apiKey': "AIzaSyD-mY93Ujdy8a3vZGwM3gSnUqul0aXH6l8",
@@ -25,17 +26,8 @@ firebaseConfig = {
 
 firebase = pyrebase.initialize_app(firebaseConfig)
 auth = firebase.auth()
-#user = auth.sign_in_with_email_and_password("emanueljsmoraes@gmail.com", "123456")
 database = firebase.database()
-
 current_user = auth.sign_in_with_email_and_password("emanueljsmoraes@gmail.com", "123456")
-
-class TelaUsuario(MDScreen):
-    def atualiza_dados_usuario(self):
-        self.ids.lbNome.text = current_user.nome
-        self.ids.lbEmail.text = current_user.email
-        self.ids.lbSenha.text = current_user.senha
-        self.ids.lbCep.text = current_user.cep
 
 class MainApp(MDApp):
 
@@ -56,6 +48,9 @@ class MainApp(MDApp):
         tela_produto = self.root.get_screen("telaproduto")
         tela_produto.root_db = database
         tela_produto.current_user = current_user
+
+        tela_usuario = self.root.get_screen("telausuario")
+        tela_usuario.current_user = current_user
 
     def callback(self, tela):
         if tela == "telausuario":
